@@ -1,0 +1,481 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #bc308b;
+  --secondary-color: #8b59df;
+  --white: #ffffff;
+  --light-gray: #edefe8;
+  --dark-gray: #333333;
+  --transition-speed: 0.8s;
+  --card-radius: 25px;
+  --bubble-radius: 40% 60% 70% 30% / 50% 50% 60% 40%;
+}
+
+/* Added for video background */
+body {
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
+  overflow-x: hidden;
+}
+
+/* Main Content Alignment Fix */
+.flex-1 {
+  display: flex;
+  align-items: center;
+}
+
+/* Column Containers */
+.w-full.md\:w-65p,
+.w-full.md\:w-35p  {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.primary-gradient {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.card {
+  border-radius: var(--card-radius);
+  background-color: var(--white);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* Auth Card Styles */
+.auth-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  perspective: 1200px;
+}
+
+.auth-card {
+  display: flex;
+  height: 500px;
+  width: 100%;
+  position: relative;
+  border-radius: var(--card-radius);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: all var(--transition-speed) ease;
+}
+
+.auth-card.swapping {
+  animation: bubble-morph var(--transition-speed) ease-in-out;
+}
+
+.auth-info,
+.auth-form {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all var(--transition-speed) cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.auth-info {
+  left: 0;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--white);
+  z-index: 2;
+  clip-path: ellipse(90% 100% at 10% 50%);
+}
+
+.auth-form {
+  right: 0;
+  background: var(--white);
+  z-index: 1;
+  clip-path: ellipse(90% 100% at 90% 50%);
+}
+
+/* States */
+.login-mode .auth-info {
+  transform: translateX(0);
+  clip-path: ellipse(100% 100% at 0% 50%);
+}
+
+.login-mode .auth-form {
+  transform: translateX(0);
+  clip-path: ellipse(100% 100% at 100% 50%);
+}
+
+.request-mode .auth-info {
+  transform: translateX(100%);
+  clip-path: ellipse(100% 100% at 100% 50%);
+}
+
+.request-mode .auth-form {
+  transform: translateX(-100%);
+  clip-path: ellipse(100% 100% at 0% 50%);
+}
+
+.success-mode .auth-info {
+  transform: translateX(100%);
+  clip-path: ellipse(100% 100% at 100% 50%);
+}
+
+.success-mode .auth-form {
+  transform: translateX(-100%);
+  clip-path: ellipse(100% 100% at 0% 50%);
+}
+
+/* Bubble Animation */
+@keyframes bubble-morph {
+  0% {
+    border-radius: var(--card-radius);
+    transform: scale(1);
+  }
+  50% {
+    border-radius: var(--bubble-radius);
+    transform: scale(0.98);
+  }
+  100% {
+    border-radius: var(--card-radius);
+    transform: scale(1);
+  }
+}
+
+/* Image Card Styles */
+.image-card {
+  height: 500px;
+  border-radius: var(--card-radius);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: all var(--transition-speed) ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 0px;
+  align-self: flex-start;
+}
+
+.image-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.2);
+}
+
+.bubble {
+  border-radius: var(--bubble-radius);
+  animation: morph 8s ease-in-out infinite;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.bubble img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@keyframes morph {
+  0% {
+    border-radius: 40% 60% 70% 30% / 50% 50% 60% 40%;
+  }
+  50% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  100% {
+    border-radius: 40% 60% 70% 30% / 50% 50% 60% 40%;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .flex-1 {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .auth-card {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .auth-info,
+  .auth-form {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 30px;
+  }
+
+  .login-mode .auth-info,
+  .request-mode .auth-info,
+  .success-mode .auth-info {
+    transform: translateY(0);
+    clip-path: ellipse(100% 100% at 50% 0%);
+  }
+
+  .login-mode .auth-form,
+  .request-mode .auth-form,
+  .success-mode .auth-form {
+    transform: translateY(0);
+    clip-path: ellipse(100% 100% at 50% 100%);
+  }
+
+  .request-mode .auth-info {
+    transform: translateY(100%);
+  }
+
+  .request-mode .auth-form {
+    transform: translateY(-100%);
+  }
+
+  .success-mode .auth-info {
+    transform: translateY(100%);
+  }
+
+  .success-mode .auth-form {
+    transform: translateY(-100%);
+  }
+
+  .image-card {
+    height: auto;
+    min-height: 300px;
+    margin-top: 2rem;
+  }
+
+  .auth-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    perspective: 1200px;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .bubble {
+    max-width: 300px;
+    height: 85%;
+    width: 85%;
+  }
+}
+
+/* Rest of existing styles... */
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.sidebar {
+  background-color: var(--white);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-item {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin: 0.25rem 0;
+}
+
+.sidebar-item:hover {
+  background-color: rgba(188, 48, 139, 0.1);
+}
+
+.sidebar-item.active {
+  background-color: rgba(188, 48, 139, 0.2);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.email-list-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.email-list-item:hover {
+  background-color: rgba(188, 48, 139, 0.05);
+}
+
+.email-list-item.unread {
+  font-weight: 600;
+}
+
+.badge {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-radius: 9999px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-secondary {
+  background-color: var(--secondary-color);
+}
+
+.badge-outline {
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.loading-spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top: 3px solid var(--primary-color);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Add these to your existing globals.css */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+}
+
+/* Improved button visibility */
+.control-button {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #111827;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(209, 213, 219, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.control-button:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+/* Smooth transitions for components */
+.component-transition {
+  transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
+}
+
+.component-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.component-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+/* Add these to your existing globals.css */
+
+/* Transition Classes */
+.transition-slide {
+  transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+  opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.slide-out-left {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.slide-out-right {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-in-left {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-in-right {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Control Buttons */
+.control-button {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #111827;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(209, 213, 219, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.control-button:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+/* Overflow Control */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .slide-out-left,
+  .slide-out-right {
+    transform: translateY(100%);
+  }
+
+  .slide-in-left,
+  .slide-in-right {
+    transform: translateY(0);
+  }
+}
