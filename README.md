@@ -27,6 +27,7 @@ LangChain
 Gemini / LLaMA
 
 🖥 Backend:
+for backend code contact : smileyishere1008@gmail.com
 
 Java 21
 
